@@ -29,12 +29,25 @@ function App() {
   const userId = cookies.get('userId');
   const userType = cookies.get('userType');
 
-  const renderDashLink = () => {
+  const renderLinks = () => {
     if (userId) {
       const port = (userType === 'teacher') ? 3001 : 6002;
-      return (<a href={`http://localhost:${port}`}>Dashboard</a>);
+      return (
+        <>
+          <li>
+            <a href={`http://localhost:${port}`}>Dashboard</a>
+          </li>
+          <li>
+              <a href={`http://localhost:7001/${userId}`}>Messages</a>
+          </li>
+        </>
+      );
+
     } else {
-      return (<Link to="/login">Login</Link>);
+      return (
+        <li>
+          <Link to="/login">Login</Link>
+        </li>);
     }
   }
 
@@ -46,12 +59,9 @@ function App() {
             <li>
               <Link to="/">Home</Link>
             </li>
-            <li>
-              {renderDashLink()}
-            </li>
-            <li>
-              <a href={`http://localhost:7001/${userId}`}>Messages</a>
-            </li>
+            
+            {renderLinks()}
+            
           </ul>
 
           <hr />
