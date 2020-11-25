@@ -35,8 +35,8 @@ services:
         context: .
         dockerfile: Dockerfile
       volumes:
-        - '.:/app'
-        - '/app/node_modules'
+        - .:/src/app
+        - /app/node_modules
       # command: npm start
       # image: willjantscher/students_app:latest
       depends_on: 

@@ -9,6 +9,7 @@ import {
 import Home from '../Home/Home';
 import Login from '../Login/Login';
 import Signup from '../Signup/Signup';
+import Cookies from 'universal-cookie';
 
 function App() {
 
@@ -23,6 +24,20 @@ function App() {
 
   useEffect(fetchCourses, []);
 
+
+  const cookies = new Cookies();
+  const userId = cookies.get('userId');
+  const userType = cookies.get('userType');
+
+  const renderDashLink = () => {
+    if (userId) {
+      const port = (userType === 'teacher') ? 3001 : 6002;
+      return (<a href={`http://localhost:${port}`}>Dashboard</a>);
+    } else {
+      return (<Link to="/login">Login</Link>);
+    }
+  }
+
   return (
     <div className="App">
       <Router>
@@ -32,7 +47,10 @@ function App() {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/login">Login</Link>
+              {renderDashLink()}
+            </li>
+            <li>
+              <a href={`http://localhost:7001/${userId}`}>Messages</a>
             </li>
           </ul>
 
