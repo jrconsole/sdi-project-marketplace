@@ -1,13 +1,9 @@
-const Pool = require('pg').Pool;
-const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'marketplace_db',
-    password: 'postgres',
-    port: 5432
-})
+const db = require('./course-queries');
+const pool = db.connect();
+
 
 function getAllSubjects(res) {
+
     pool.query(`SELECT * FROM Subjects`, (err, result) => {
         if (err) {
             throw err;

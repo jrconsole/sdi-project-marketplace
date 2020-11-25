@@ -19,10 +19,11 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "concurrently \"set PORT=5001 && react-scripts start\" \"cd .\\server && node app.js\"",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start-server": "node server/app.js",
+    "start": "PORT=5001 react-scripts start",
+    "build": "PORT=5001 react-scripts build",
+    "test": "PORT=5001 react-scripts test",
+    "eject": "PORT=5001 react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -41,5 +42,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }

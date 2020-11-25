@@ -1,13 +1,15 @@
 const Pool = require('pg').Pool;
 const pool = new Pool({
     user: 'postgres',
-    host: 'localhost',
+    host: 'db',
     database: 'marketplace_db',
     password: 'postgres',
     port: 5432
 })
+const connect = () => { return pool; }
 
 function getAllCourses(res) {
+
     pool.query(`SELECT * FROM Courses`, (err, result) => {
         if (err) {
             throw err;
@@ -18,7 +20,7 @@ function getAllCourses(res) {
 }
 
 const getCourse = (id, res) => {
-
+    
     pool.query(`
         SELECT * from Courses 
         WHERE id = $1
@@ -134,5 +136,6 @@ module.exports = {
     getCourse, 
     postCourse, 
     updateCourse, 
-    deleteCourse
+    deleteCourse,
+    connect
 }

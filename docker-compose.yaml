@@ -1,0 +1,49 @@
+version: '2.1'
+
+services:
+    db:
+      image: postgres
+      healthcheck:
+        test: exit 0
+      ports:
+      - 5432:5432
+      environment:
+        - POSTGRES_DB=marketplace_db
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+      volumes:    # will let you start up an initial database with an sql file in the area
+          - ./marketplace_dbinit.sql:/docker-entrypoint-initdb.d/marketplace_dbinit.sql
+          # can add persistance by adding to studentDBinit.sql upon db changes
+
+    server:
+      build: .
+      command: npm run start-server
+      image: jrconsole/marketplace_server:latest #make sure to include this!, references top-folder_service-name
+      environment:
+        - DATABASE_URL=postgres://postgres:postgres@db:5432
+        - NODE_ENV=test
+      depends_on:
+        db:
+          condition: service_healthy
+      links:
+        - db
+      ports:
+        - 5003:5003   #server should mount on port 6003, 6004 is internal port for the server
+
+    app:
+      build: 
+        context: .
+        dockerfile: Dockerfile
+      volumes:
+        - '.:/app'
+        - '/app/node_modules'
+      # command: npm start
+      # image: willjantscher/students_app:latest
+      depends_on: 
+        - server
+      links:
+        - server
+      ports:
+        - 5001:5001
+      environment:
+        - CHOKIDAR_USEPOLLING=true
