@@ -31,7 +31,7 @@ function Signup({ courses }) {
   const [isRegistered, setIsRegistered] = useState(false);
   const fetchRegistration = async () => {
     const studentId = cookies.get('userId');
-    const response = await fetch(/*studentsCourses table */`http://localhost:6003/courses/${studentId}`);
+    const response = await fetch(/*studentsCourses table */`http://localhost:6001/courses/${studentId}`);
     const jsonResponse = await response.json();
 
     const courseStudent = jsonResponse.filter(pair => {
@@ -50,7 +50,7 @@ function Signup({ courses }) {
   }, []);
 
   const handleSignup = async () => {
-    await fetch(/*studentCourses table*/`http://localhost:6003/students_courses`, {
+    await fetch(/*studentCourses table*/`http://localhost:6001/students_courses`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({

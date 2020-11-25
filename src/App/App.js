@@ -31,7 +31,7 @@ function App() {
 
   const renderLinks = () => {
     if (userId) {
-      const port = (userType === 'teacher') ? 3001 : 6002;
+      const port = (userType === 'teacher') ? 3001 : 6001;
       return (
         <>
           <li>

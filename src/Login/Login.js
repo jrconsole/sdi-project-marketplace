@@ -28,7 +28,7 @@ function Login() {
       id: '',
       type: ''
     }
-    const studentResponse = await fetch(/*students table:*/`http://localhost:6003/login?username=${username}&password=${password}`);
+    const studentResponse = await fetch(/*students table:*/`http://localhost:6001/login?username=${username}&password=${password}`);
 
     if (studentResponse.status === 403) {
       const teacherResponse = await fetch(/*teachers table:*/ `http://localhost:3003/login?username=${username}&password=${password}`);
@@ -58,7 +58,7 @@ function Login() {
     e.preventDefault();
     let response;
     if (userType === 'student') {
-      response = await fetch(/*students table:*/'http://localhost:6003/students', {
+      response = await fetch(/*students table:*/'http://localhost:6001/students', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
