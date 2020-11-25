@@ -10,7 +10,7 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 const cors = require('cors');
-app.use(cors());
+app.use(cors({credentials: true}));
 
 //create and mount express routers to handle course and subject requests respectively
 const courseRouter = require('./courses')
